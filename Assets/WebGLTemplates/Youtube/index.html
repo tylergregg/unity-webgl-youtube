@@ -56,7 +56,7 @@
 
 		function onPlayerReady(event) {
 			if (! event.target.getIframe().shuffle) { // this avoids setting the title to the first video in the playlist before shuffling
-				unityGameInstance.SendMessage("YoutubeManager", "SetTitle", JSON.stringify([event.target.getIframe().id, event.target.getIframe().title]));
+				setTitle(event.target.getIframe().id, event.target.getIframe().title);
 			}
 			event.target.setShuffle(event.target.getIframe().shuffle);
 
@@ -68,12 +68,20 @@
 
 		function onPlayerStateChange(event) {
 			if (event.data == YT.PlayerState.PLAYING) {
-				unityGameInstance.SendMessage("YoutubeManager", "SetTitle", JSON.stringify([event.target.getIframe().id, event.target.getIframe().title]));
+				setTitle(event.target.getIframe().id, event.target.getIframe().title);
 			}
 		}
 
 		function onPlayerError(event) {
 			console.log("youtube error: " + event.data);
+			if (event.data == "150") {
+				console.log("video can't be embedded: iframe: " + event.target.getIframe().id + " title: " + event.target.getIframe().title);
+				setTitle(event.target.getIframe().id, event.target.getIframe().title);
+			}
+		}
+
+		function setTitle(iframeId, title) {
+			unityGameInstance.SendMessage("YoutubeManager", "SetTitle", JSON.stringify([iframeId, title]));
 		}
 
 		function handlePlayerClick(iframeId) {
