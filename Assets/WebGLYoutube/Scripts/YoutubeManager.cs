@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Newtonsoft.Json.Linq;
-using System;
 
-public class YoutubeManager : MonoBehaviour
-{
+public class YoutubeManager : MonoBehaviour {
+
     [DllImport("__Internal")]
     private static extern void SetupYoutube();
 
@@ -15,14 +12,14 @@ public class YoutubeManager : MonoBehaviour
     private int iframeReadyCount;
 
     private void Awake() {
-        this.iframes = FindObjectsByType<CSS3DIframe>(FindObjectsSortMode.None);
+        this.iframes = Object.FindObjectsByType<CSS3DIframe>(FindObjectsSortMode.None);
     }
 
 
     private void IframeCreated() {
         this.iframeReadyCount++;
         if (this.iframeReadyCount == this.iframes.Length) {
-            SetupYoutube();
+            YoutubeManager.SetupYoutube();
         }
     }
 

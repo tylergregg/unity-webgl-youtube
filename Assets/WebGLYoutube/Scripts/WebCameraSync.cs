@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class WebCameraSync : MonoBehaviour 
-{
+public class WebCameraSync : MonoBehaviour {
+
     [DllImport("__Internal")]
     private static extern void SyncCameraTransform(float x, float y, float z, float rw, float rx, float ry, float rz);
 
@@ -15,7 +15,7 @@ public class WebCameraSync : MonoBehaviour
 
     private void Update() {
 #if UNITY_WEBGL && ! UNITY_EDITOR
-        SyncCameraTransform(this.mainCamera.transform.position.x, this.mainCamera.transform.position.y, this.mainCamera.transform.position.z,
+        WebCameraSync.SyncCameraTransform(this.mainCamera.transform.position.x, this.mainCamera.transform.position.y, this.mainCamera.transform.position.z,
             this.mainCamera.transform.rotation.w, this.mainCamera.transform.rotation.x, this.mainCamera.transform.rotation.y, this.mainCamera.transform.rotation.z);
 #endif
     }

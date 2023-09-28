@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class SC_FPSController : MonoBehaviour
-{
+public class SC_FPSController : MonoBehaviour {
+
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -35,7 +33,7 @@ public class SC_FPSController : MonoBehaviour
 #endif
     }
 
-    public void ProcessInput() {
+    private void ProcessInput() {
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = this.transform.TransformDirection(Vector3.forward);
         Vector3 right = this.transform.TransformDirection(Vector3.right);

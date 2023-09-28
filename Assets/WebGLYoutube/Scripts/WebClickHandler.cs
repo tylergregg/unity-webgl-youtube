@@ -28,13 +28,13 @@ public class WebClickHandler : MonoBehaviour {
             if (Physics.Raycast(ray, out hit)) {
                 CSS3DIframe iframe = hit.collider.gameObject.GetComponent<CSS3DIframe>();
                 if (iframe != null) {
-                    ClickIframe(iframe.id);
+                    WebClickHandler.ClickIframe(iframe.id);
                 }
                 else if (hit.collider.gameObject.name == "Next Button") {
-                    ClickNextButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
+                    WebClickHandler.ClickNextButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
                 }
                 else if (hit.collider.gameObject.name == "Previous Button") {
-                    ClickPreviousButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
+                    WebClickHandler.ClickPreviousButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
                 }
             }
         }
