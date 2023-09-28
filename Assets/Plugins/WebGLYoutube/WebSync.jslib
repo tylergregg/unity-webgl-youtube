@@ -3,6 +3,10 @@ mergeInto(LibraryManager.library, {
     CreateIframe: function(id, videoIdArrayJSON, listType, listId, 
 		autoplay, loop, shuffle, width, height, xPosition, yPosition, zPosition, yRotation) {
 
+		if (yRotation == 90 || yRotation == 270) { // strange Safari bug where videos are blank with only audio
+			yRotation += .0001;
+		}
+
         addYoutubeIframe(UTF8ToString(id), UTF8ToString(videoIdArrayJSON), UTF8ToString(listType), UTF8ToString(listId),
 			autoplay, loop, shuffle, width, height, xPosition / 10, yPosition / 10, -zPosition / 10, -yRotation * Math.PI / 180 );
     },
