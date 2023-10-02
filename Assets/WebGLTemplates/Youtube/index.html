@@ -31,6 +31,7 @@
     	var addYoutubeIframe;
 		var youtubeIframes = [];
 		var youtubePlayers = [];
+		const unityToThreeScale = 100;
 
     	var initializeYoutube = function() {
         	var tag = document.createElement('script');
@@ -86,6 +87,11 @@
 
 		function handlePlayerClick(iframeId) {
 			var player = document.getElementById(iframeId).player;
+			if (!player || !player.getPlayerState) {
+				console.log("WARNING: player not ready! iframe id = " + iframeId);
+				return; 
+			}
+
 			switch(player.getPlayerState()) {
 				case YT.PlayerState.UNSTARTED: player.playVideo(); break;
 				case YT.PlayerState.CUED: player.playVideo(); break;
@@ -171,8 +177,7 @@
 			div.appendChild(iframe);
 
 			const object = new CSS3DObject(div);
-			object.scale.set(object.scale.x/1000, object.scale.y/1000, 1);
-			object.position.set(x, y, z);
+			object.position.set(x * unityToThreeScale, y * unityToThreeScale, -z * unityToThreeScale);
 			object.rotation.y = ry;
 			iframe.threeObject = object;
 			
@@ -196,7 +201,8 @@
 		function animate() {
 			requestAnimationFrame(animate);
 
-			camera.position.set(cameraPositionVector.x / 10, cameraPositionVector.y / 10, -cameraPositionVector.z / 10);
+			camera.position.set(cameraPositionVector.x * unityToThreeScale, 
+				cameraPositionVector.y * unityToThreeScale, -cameraPositionVector.z * unityToThreeScale);
 
 			q.set(-cameraRotationQuaternion.w, cameraRotationQuaternion.x, cameraRotationQuaternion.y, -cameraRotationQuaternion.z);
 
@@ -215,7 +221,7 @@
 
 			youtubePlayers.forEach((player) => {
 				if (player.setVolume) {
-					player.setVolume(100 - (camera.position.distanceTo(player.getIframe().threeObject.position) * 100));
+					player.setVolume(100 - (camera.position.distanceTo(player.getIframe().threeObject.position) / 10));
 				}				
 			});
 		}

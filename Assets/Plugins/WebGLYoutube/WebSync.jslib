@@ -8,7 +8,7 @@ mergeInto(LibraryManager.library, {
 		}
 
         addYoutubeIframe(UTF8ToString(id), UTF8ToString(videoIdArrayJSON), UTF8ToString(listType), UTF8ToString(listId),
-			autoplay, loop, shuffle, width, height, xPosition / 10, yPosition / 10, -zPosition / 10, -yRotation * Math.PI / 180 );
+			autoplay, loop, shuffle, width, height, xPosition, yPosition, zPosition, -yRotation * Math.PI / 180 );
     },
 
     SyncCameraTransform: function (x, y, z, rx, ry, rz, rw) {
