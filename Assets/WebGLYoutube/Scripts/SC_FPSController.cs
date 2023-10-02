@@ -1,8 +1,12 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 
 public class SC_FPSController : MonoBehaviour {
+
+    [DllImport("__Internal")]
+    public static extern void SyncCameraTransform(float x, float y, float z, float rw, float rx, float ry, float rz);
 
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
@@ -68,5 +72,8 @@ public class SC_FPSController : MonoBehaviour {
             this.playerCamera.transform.localRotation = Quaternion.Euler(this.rotationX, 0, 0);
             this.transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * this.lookSpeed, 0);
         }
+
+        SC_FPSController.SyncCameraTransform(this.playerCamera.transform.position.x, this.playerCamera.transform.position.y, this.playerCamera.transform.position.z,
+            this.playerCamera.transform.rotation.w, this.playerCamera.transform.rotation.x, this.playerCamera.transform.rotation.y, this.playerCamera.transform.rotation.z);
     }
 }

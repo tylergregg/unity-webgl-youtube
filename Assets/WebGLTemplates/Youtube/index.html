@@ -217,6 +217,10 @@
 		function animate() {
 			requestAnimationFrame(animate);
 
+			if (unityGameInstance) {
+				unityGameInstance.SendMessage('Player', 'ProcessInput');
+			}
+
 			camera.position.set(cameraPositionVector.x * unityToThreeScale, 
 				cameraPositionVector.y * unityToThreeScale, -cameraPositionVector.z * unityToThreeScale);
 
@@ -230,9 +234,6 @@
 			camera.rotation.copy(v);
 	
 			renderer.render(scene, camera);
-			if (unityGameInstance) {
-				unityGameInstance.SendMessage('Player', 'ProcessInput');
-			}
 
 
 			youtubePlayers.forEach((player) => {

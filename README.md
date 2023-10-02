@@ -24,7 +24,9 @@ Extract all the files into your project. There's a sample implementation in the 
 
 In Project Settings under Resolution & Presentation, select the "Youtube" WebGL template.  
 
-Set your main camera clear flags to `Solid Color` with alpha = 0. Add the `WebCameraSync` and `WebClickHandler` components to the camera.
+Set your main camera clear flags to `Solid Color` with alpha = 0. Add the `WebClickHandler` components to the camera.
+
+If you don't use the `SC_FPSController` component on your player object, note that `ProcessInput()` is called from the template at the beginning of `animate()`, and when that function is done it calls `SyncCameraTransform()` in `WebSync.jslib`. You'll need to do something similar in your implementation, and be sure to maintain the order that things happen to avoid camera lag.
 
 You can either use the provided `YoutubeVideoPlayer` prefab, or create a quad, add the `CSS3DIframe` component, and set its xy scale to 4.8 x 3.6. This will result in a 480px x 360px iframe.
 Note that only y-axis rotation is supported at the moment.
@@ -35,13 +37,13 @@ You can either add video IDs to the `videoIdList` OR select a `listType` and set
 Drag the `YoutubeManager` prefab into your scene. This script sets the video titles, and also delays loading youtube's API until after Unity tells the browser to create the iframes. I don't know why this is necessary, but it doesn't work otherwise with dynamically added iframes.  
 
 While you can run this in editor, the video players only work in a WebGL build.  
-In Firefox, you may need to turn off "enhanced tracking protection" for the current site. Click the shield on the left side of the address bar.
+
+Safari, Chrome, and Firefox on Mac don't show videos when running on localhost. In Safari you can get around this by disabling the `Cross-Origin-Embedder-Policy (COEP) Header` in `Preferences`->`Feature Flags`.  
+Safari (Mac and iOS) had a bug where videos wouldn't play when refreshing the page. It doesn't happen when the iframes are predefined, so in `index.html` you'll see a bunch of iframes with the same `youtubeStaticPlayer` id. If that isn't enough to handle all the videos in your scene, copy and paste that iframe declaration as many times as you need. It's messy, but I couldn't find another way around the problem.
 
 ## What else?
 Interaction is limited to click to play/pause/unpause and playlist next/previous buttons. Interacting with the iframes directly would require using the mouse cursor and temporarily disabling pointer events on the Unity player. This is possible, but awkward.
 
 Fullscreen mode doesn't work yet.  
-
-The iframes lag slightly when the camera moves, even on a fast machine. I *think* I alleviated this somewhat by delaying Unity input handling and camera movement until the three.js scene has finished rendering, but it could also be my imagination.
 
 My quaternion math is a mess. Help.  
