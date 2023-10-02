@@ -12,15 +12,18 @@
 #endif
 		<style>
 			#unity-canvas { outline-style: solid }
-			#cssContainer { outline-style: solid; outline-color: green}
+			#cssContainer { outline-style: solid; outline-color: green }
 			#cssContainer { position: absolute; }
 			#cssContainer { left: 50%; top: 50%; transform: translate(-50%, -50%); }
 			iframe {border: none}
 			canvas { vertical-align: middle; }
+			canvas:focus { outline: none; }
 		</style>
 	</head>
 
 	<body>
+
+	<script src="platform.js"></script>
 
 	<script>
 		var camera;
@@ -75,7 +78,7 @@
 		}
 
 		function onPlayerError(event) {
-			console.log("youtube error: " + event.data);
+			console.log("youtube error: " + event.data + " + iframe: " + event.target.getIframe().id);
 			if (event.data == "150") {
 				console.log("video can't be embedded: iframe: " + event.target.getIframe().id + " title: " + event.target.getIframe().title);
 				setTitle(event.target.getIframe().id, event.target.getIframe().title);
@@ -124,6 +127,17 @@
 		}
 	</script>
 
+	
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
+	<iframe id="youtubeStaticPlayer"></iframe>
 
 
 	<script type="module">
@@ -149,14 +163,16 @@
 		function YoutubeObject(id, videoIdArrayJSON, listType, listId, autoplay, loop, shuffle, width, height, x, y, z, ry) {
 			const videoIdArray = JSON.parse(videoIdArrayJSON);
 
-			const div = document.createElement('div');
-			div.style.width = width * 100 + 'px';
-			div.style.height = height * 100 + 'px';
-
-			const iframe = document.createElement('iframe');
+			let iframe;
+			if (platform.name == 'Safari') {
+				iframe = document.getElementById('youtubeStaticPlayer');
+			}
+			else {
+				iframe = document.createElement('iframe');
+			}
 			iframe.id = id;
-			iframe.style.width = width * 100 + 'px';
-			iframe.style.height = height * 100 + 'px';
+			iframe.style.width = width * unityToThreeScale + 'px';
+			iframe.style.height = height * unityToThreeScale + 'px';
 			iframe.src = "https://www.youtube.com/embed/";
 
 			if (listId) {
@@ -173,11 +189,10 @@
 			iframe.setAttribute("allow", "autoplay"); // necessary for videos to play unmuted in chrome
 			iframe.autoplay = autoplay;
 			iframe.shuffle = shuffle;
+
 			youtubeIframes.push(iframe);
 
-			div.appendChild(iframe);
-
-			const object = new CSS3DObject(div);
+			const object = new CSS3DObject(iframe);
 			object.position.set(x * unityToThreeScale, y * unityToThreeScale, -z * unityToThreeScale);
 			object.rotation.y = ry;
 			iframe.threeObject = object;
