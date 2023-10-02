@@ -12,7 +12,7 @@ public class YoutubeManager : MonoBehaviour {
     private int iframeReadyCount;
 
     private void Awake() {
-        this.iframes = Object.FindObjectsByType<CSS3DIframe>(FindObjectsSortMode.None);
+        this.iframes = Object.FindObjectsByType<CSS3DIframe>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
     }
 
 
