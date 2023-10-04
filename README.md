@@ -42,8 +42,8 @@ Safari, Chrome, and Firefox on Mac don't show videos when running on localhost. 
 Safari (Mac and iOS) had a bug where videos wouldn't play when refreshing the page. It doesn't happen when the iframes are predefined, so in `index.html` you'll see a bunch of iframes with the same `youtubeStaticPlayer` id. If that isn't enough to handle all the videos in your scene, copy and paste that iframe declaration as many times as you need. It's messy, but I couldn't find another way around the problem.
 
 ## What else?
-Interaction is limited to click to play/pause/unpause and playlist next/previous buttons. Interacting with the iframes directly would require using the mouse cursor and temporarily disabling pointer events on the Unity player. This is possible, but awkward.
+Interaction is limited to click to play/pause/unpause and playlist next/previous buttons. Interacting with the iframes directly would require using the mouse cursor and temporarily disabling pointer events on the Unity player. This is possible, but awkward.  
 
-Fullscreen mode doesn't work yet.  
+Fullscreen mode works, except when exiting in Safari the canvas is in the wrong position for 10-20 seconds before shifting back into place. No idea why.  
 
 My quaternion math is a mess. Help.  
