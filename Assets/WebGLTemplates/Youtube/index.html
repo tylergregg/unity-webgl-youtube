@@ -19,6 +19,7 @@
 			canvas { vertical-align: middle; }
 			canvas:focus { outline: none; }
 			#fullScreenContainer { position: relative; height: 100%; width: 100%; }
+			#iframeContainer { position: absolute }
 		</style>
 	</head>
 
@@ -39,6 +40,11 @@
 		var youtubePlayers = [];
 		const unityToThreeScale = 100;
 
+		window.addEventListener("resize", function(e) {
+			if (platform.product == "iPhone" || platform.product == "iPad") {
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			}
+		});
 
 		document.addEventListener('fullscreenchange', function(e) { 
 			if (document.fullscreenElement){ 
@@ -149,18 +155,6 @@
 		}
 	</script>
 
-	
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-	<iframe id="youtubeStaticPlayer"></iframe>
-
 
 	<script type="module">
 		import * as THREE from 'three';
@@ -267,6 +261,18 @@
 
 
 
+	<div id="iframeContainer">
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+		<iframe id="youtubeStaticPlayer"></iframe>
+	</div>
 		
 
     <div id="unity-container" class="unity-desktop">

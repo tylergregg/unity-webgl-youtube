@@ -21,23 +21,40 @@ public class WebClickHandler : MonoBehaviour {
     }
 
     private void Update() {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0)) {
-            Ray ray = this.mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-            RaycastHit hit;
+
+        if (Application.isEditor) {
+            return;
+        }
+
+        Ray ray = new Ray();
+        RaycastHit hit = new RaycastHit();
+        GameObject target = null;
+
+        if (!Application.isMobilePlatform && Input.GetMouseButtonDown(0)) {
+            ray = this.mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             if (Physics.Raycast(ray, out hit)) {
-                CSS3DIframe iframe = hit.collider.gameObject.GetComponent<CSS3DIframe>();
-                if (iframe != null) {
-                    WebClickHandler.ClickIframe(iframe.id);
-                }
-                else if (hit.collider.gameObject.name == "Next Button") {
-                    WebClickHandler.ClickNextButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
-                }
-                else if (hit.collider.gameObject.name == "Previous Button") {
-                    WebClickHandler.ClickPreviousButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
-                }
+                target = hit.collider.gameObject;
             }
         }
-#endif
+        else if (Application.isMobilePlatform && Input.touches[0].phase == TouchPhase.Began) {
+            ray = this.mainCamera.ScreenPointToRay(Input.touches[0].position);
+            if (Physics.Raycast(ray, out hit)) {
+                target = hit.collider.gameObject;
+            }
+        }
+
+        if (target != null) {
+            CSS3DIframe iframe = target.GetComponent<CSS3DIframe>();
+
+            if (iframe != null) {
+                WebClickHandler.ClickIframe(iframe.id);
+            }
+            else if (target.name == "Next Button") {
+                WebClickHandler.ClickNextButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
+            }
+            else if (target.name == "Previous Button") {
+                WebClickHandler.ClickPreviousButton(hit.collider.gameObject.GetComponentInParent<CSS3DIframe>().id);
+            }
+        }
     }
 }
