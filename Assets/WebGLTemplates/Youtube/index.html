@@ -224,7 +224,12 @@
 			const cssContainer = document.getElementById('cssContainer');
 
 			renderer = new CSS3DRenderer();
-			renderer.setSize({{{ WIDTH }}}, {{{ HEIGHT }}});
+			if (platform.product == "iPhone" || platform.product == "iPad") {
+				renderer.setSize(window.innerWidth, window.innerHeight);
+			}
+			else {
+				renderer.setSize({{{ WIDTH }}}, {{{ HEIGHT }}});
+			}
 			cssContainer.appendChild(renderer.domElement);
  		}
 
@@ -251,11 +256,13 @@
 			renderer.render(scene, camera);
 
 
-			youtubePlayers.forEach((player) => {
-				if (player.setVolume) {
-					player.setVolume(100 - (camera.position.distanceTo(player.getIframe().threeObject.position) / 10));
-				}				
-			});
+			if (platform.product != "iPhone" && platform.product != "iPad") {
+				youtubePlayers.forEach((player) => {
+					if (player.setVolume) {
+						player.setVolume(100 - (camera.position.distanceTo(player.getIframe().threeObject.position) / 10));
+					}				
+				});
+			}
 		}
 	</script>
 
@@ -296,7 +303,6 @@
 #if SHOW_DIAGNOSTICS
         <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
 #endif
-        <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
     </div>
     
 
