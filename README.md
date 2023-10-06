@@ -24,7 +24,7 @@ Extract all the files into your project. There's a sample implementation in the 
 
 In Project Settings under Resolution & Presentation, select the "Youtube" WebGL template.  
 
-Set your main camera clear flags to `Solid Color` with alpha = 0. Add the `WebClickHandler` components to the camera.
+Set your main camera clear flags to `Solid Color` with alpha = 0. Add the `WebClickHandler` component to the camera.
 
 If you don't use the `SC_FPSController` component on your player object, note that `ProcessInput()` is called from the template at the beginning of `animate()`, and when that function is done it calls `SyncCameraTransform()` in `WebSync.jslib`. You'll need to do something similar in your implementation, and be sure to maintain the order that things happen to avoid camera lag.
 
