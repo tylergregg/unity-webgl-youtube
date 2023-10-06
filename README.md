@@ -1,5 +1,5 @@
 # unity-webgl-youtube
-Add youtube embeds to a Unity WebGL build.
+Add embedded youtube videos to a Unity WebGL build.
 
 ## What?
 Videos are played in iframes, just like normal youtube embeds. The iframes are transformed with 3D CSS, and are then visible behind transparent areas of the Unity player.
@@ -34,16 +34,20 @@ Note that only y-axis rotation is supported at the moment.
 Set the iframe's `id` to something unique (like "youtubePlayer1").  
 You can either add video IDs to the `videoIdList` OR select a `listType` and set `listId` to a playlist ID or youtube username. Doing the latter will override the former.
 
-Drag the `YoutubeManager` prefab into your scene. This script sets the video titles, and also delays loading youtube's API until after Unity tells the browser to create the iframes. I don't know why this is necessary, but it doesn't work otherwise with dynamically added iframes.  
+Drag the `YoutubeManager` prefab into your scene. This sets the video titles, and also delays loading youtube's API until after Unity tells the browser to create the iframes. I don't know why this is necessary, but it doesn't work otherwise with dynamically added iframes.  
+
+## What else?
 
 While you can run this in editor, the video players only work in a WebGL build.  
 
-Safari, Chrome, and Firefox on Mac don't show videos when running on localhost. In Safari you can get around this by disabling the `Cross-Origin-Embedder-Policy (COEP) Header` in `Preferences`->`Feature Flags`.  
-Safari (Mac and iOS) had a bug where videos wouldn't play when refreshing the page. It doesn't happen when the iframes are predefined, so in `index.html` you'll see a bunch of iframes with the same `youtubeStaticPlayer` id. If that isn't enough to handle all the videos in your scene, copy and paste that iframe declaration as many times as you need. It's messy, but I couldn't find another way around the problem.
-
-## What else?
 Interaction is limited to click to play/pause/unpause and playlist next/previous buttons. Interacting with the iframes directly would require using the mouse cursor and temporarily disabling pointer events on the Unity player. This is possible, but awkward.  
 
 Fullscreen mode works, except when exiting in Safari the canvas is in the wrong position for 10-20 seconds before shifting back into place. No idea why.  
+
+Safari, Chrome, and Firefox on Mac don't show videos when running on localhost. In Safari you can get around this by disabling the `Cross-Origin-Embedder-Policy (COEP) Header` in `Preferences`->`Feature Flags`.  
+
+Safari (Mac and iOS) had a bug where videos wouldn't play when refreshing the page. It doesn't happen when the iframes are predefined, so in `index.html` you'll see a bunch of iframes with the same `youtubeStaticPlayer` id. If that isn't enough to handle all the videos in your scene, copy and paste that iframe declaration as many times as you need. It's messy, but I couldn't find another way around the problem.
+
+iOS: It works! For the most part. Due to what I assume are restrictions by Apple, youtube's `setVolume()` function doesn't work as expected - videos either play muted or at your device's current volume level, so I disabled the distance-based volume. Also, videos won't autoplay, and starting a second video automatically pauses the first one.
 
 My quaternion math is a mess. Help.  
