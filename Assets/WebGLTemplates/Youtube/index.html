@@ -223,7 +223,7 @@
 			const cssContainer = document.getElementById('cssContainer');
 
 			renderer = new CSS3DRenderer();
-			if (platform.product == "iPhone" || platform.product == "iPad") {
+			if (platform.product == "iPhone" || platform.product == "iPad" || (platform.os + "").indexOf("Android") > -1) {
 				renderer.setSize(window.innerWidth, window.innerHeight);
 			}
 			else {
