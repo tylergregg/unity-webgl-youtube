@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us">
 	<head>
-    	<meta charset="utf-8">
-    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    	<title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
-    	<link rel="shortcut icon" href="TemplateData/favicon.ico">
-    	<link rel="stylesheet" href="TemplateData/style.css">
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
+		<link rel="shortcut icon" href="TemplateData/favicon.ico">
+		<link rel="stylesheet" href="TemplateData/style.css">
 #if SHOW_DIAGNOSTICS
-    	<link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
-    	<script src="<<<TemplateData/diagnostics.js>>>"></script>
+		<link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
+		<script src="<<<TemplateData/diagnostics.js>>>"></script>
 #endif
 		<style>
 			#unity-canvas { outline-style: solid }
@@ -35,7 +35,7 @@
 		var cameraRotationEuler;
 		var unityGameInstance;
 		var scene;
-    	var addYoutubeIframe;
+		var addYoutubeIframe;
 		var youtubeIframes = [];
 		var youtubePlayers = [];
 		const unityToThreeScale = 100;
@@ -49,27 +49,22 @@
 		document.addEventListener('fullscreenchange', function(e) { 
 			if (document.fullscreenElement){ 
 				canvas.style.width = "100%";
-        		canvas.style.height = "100%";
-				if (platform.name == 'Safari') {
-					renderer.setSize(canvas.clientWidth, canvas.clientHeight); // Safari misbehaves on itch.io
-				}
-				else {
-					renderer.setSize(screen.width, screen.height);
-				}
+				canvas.style.height = "100%";
+				renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 			}
 			else { 
 				renderer.setSize({{{ WIDTH }}}, {{{ HEIGHT }}});
 				canvas.style.width = "{{{ WIDTH }}}px";
-		        canvas.style.height = "{{{ HEIGHT }}}px";
+				canvas.style.height = "{{{ HEIGHT }}}px";
 			}
 		})
 
-    	var initializeYoutube = function() {
-        	var tag = document.createElement('script');
-        	tag.src = "https://www.youtube.com/iframe_api";
-        	var firstScriptTag = document.getElementsByTagName('script')[0];
-        	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      	}
+		var initializeYoutube = function() {
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		}
 
 		function onYouTubeIframeAPIReady() {
 			youtubeIframes.forEach((iframe) => {
@@ -78,8 +73,8 @@
 						'onReady': onPlayerReady,
 						'onStateChange': onPlayerStateChange,
 						'onError': onPlayerError
-        	    	}
-          		});
+					}
+				});
 
 				youtubePlayers.push(youtubePlayer);
 				iframe.player = youtubePlayer;
@@ -93,10 +88,10 @@
 			event.target.setShuffle(event.target.getIframe().shuffle);
 
 			if (event.target.getIframe().autoplay) {
-	          	event.target.playVideoAt(0);
+				event.target.playVideoAt(0);
 				event.target.unMute();
 			}
-      	}
+		}
 
 		function onPlayerStateChange(event) {
 			if (event.data == YT.PlayerState.PLAYING) {
@@ -120,7 +115,7 @@
 			var player = document.getElementById(iframeId).player;
 			if (!player || !player.getPlayerState) {
 				console.log("WARNING: player not ready! iframe id = " + iframeId);
-				return; 
+				return;
 			}
 
 			switch(player.getPlayerState()) {
@@ -139,7 +134,7 @@
 		function handlePreviousButtonClick(iframeId) {
 			document.getElementById(iframeId).player.previousVideo();
 		}
-    </script>
+	</script>
 
 	<!-- Import maps polyfill -->
 	<!-- Remove this when import maps will be widely supported -->
@@ -173,7 +168,7 @@
 		var v = new THREE.Euler();
 
 
-  
+
 		function YoutubeObject(id, videoIdArrayJSON, listType, listId, autoplay, loop, shuffle, width, height, x, y, z, ry) {
 			const videoIdArray = JSON.parse(videoIdArrayJSON);
 
@@ -240,12 +235,12 @@
 				unityGameInstance.SendMessage('Player', 'ProcessInput');
 			}
 
-			camera.position.set(cameraPositionVector.x * unityToThreeScale, 
+			camera.position.set(cameraPositionVector.x * unityToThreeScale,
 				cameraPositionVector.y * unityToThreeScale, -cameraPositionVector.z * unityToThreeScale);
 
 			q.set(-cameraRotationQuaternion.w, cameraRotationQuaternion.x, cameraRotationQuaternion.y, -cameraRotationQuaternion.z);
 
-			v.setFromQuaternion( q ); 
+			v.setFromQuaternion( q );
 			v.y += Math.PI; // Y is 180 degrees off
 			v.z *= -1; // flip Z
 
@@ -259,7 +254,7 @@
 				youtubePlayers.forEach((player) => {
 					if (player.setVolume) {
 						player.setVolume(100 - (camera.position.distanceTo(player.getIframe().threeObject.position) / 10));
-					}				
+					}
 				});
 			}
 		}
@@ -281,7 +276,7 @@
 	</div>
 		
 
-    <div id="unity-container" class="unity-desktop">
+	<div id="unity-container" class="unity-desktop">
 		<div id="fullScreenContainer">
 			<div id="cssContainer"></div>  	
 			<canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
@@ -289,153 +284,149 @@
 
 
 
-    	<div id="unity-loading-bar">
-        	<div id="unity-logo"></div>
-        	<div id="unity-progress-bar-empty">
-          		<div id="unity-progress-bar-full"></div>
-        	</div>
-      	</div>
+		<div id="unity-loading-bar">
+			<div id="unity-logo"></div>
+			<div id="unity-progress-bar-empty">
+				<div id="unity-progress-bar-full"></div>
+			</div>
+		</div>
 	</div>
 
-    <div id="unity-footer">
-        <div id="unity-fullscreen-button"></div>
+	<div id="unity-footer">
+		<div id="unity-fullscreen-button"></div>
 #if SHOW_DIAGNOSTICS
-        <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
+		<img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
 #endif
-    </div>
-    
+	</div>
 
-    <script>
 
-      var container = document.querySelector("#unity-container");
-	  var fullScreenContainer = document.querySelector("#fullScreenContainer");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      var warningBanner = document.querySelector("#unity-warning");
+	<script>
+		var container = document.querySelector("#unity-container");
+		var fullScreenContainer = document.querySelector("#fullScreenContainer");
+		var canvas = document.querySelector("#unity-canvas");
+		var loadingBar = document.querySelector("#unity-loading-bar");
+		var progressBarFull = document.querySelector("#unity-progress-bar-full");
+		var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+		var warningBanner = document.querySelector("#unity-warning");
 #if SHOW_DIAGNOSTICS
-      var diagnostics_icon = document.getElementById("diagnostics-icon");
+		var diagnostics_icon = document.getElementById("diagnostics-icon");
 #endif
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
-      function unityShowBanner(msg, type) {
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-        }
-        var div = document.createElement('div');
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
-        else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
-      }
+		// Shows a temporary message banner/ribbon for a few seconds, or
+		// a permanent error message on top of the canvas if type=='error'.
+		// If type=='warning', a yellow highlight color is used.
+		// Modify or remove this function to customize the visually presented
+		// way that non-critical warnings and error messages are presented to the
+		// user.
+		function unityShowBanner(msg, type) {
+			function updateBannerVisibility() {
+				warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+			}
+			var div = document.createElement('div');
+			div.innerHTML = msg;
+			warningBanner.appendChild(div);
+			if (type == 'error') { div.style = 'background: red; padding: 10px;'; }
+			else {
+				if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+				setTimeout(function() {
+					warningBanner.removeChild(div);
+					updateBannerVisibility();
+				}, 5000);
+			}
+			updateBannerVisibility();
+		}
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
-      var config = {
-        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
-        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+		var buildUrl = "Build";
+		var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+		var config = {
+			dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+			frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
 #if USE_THREADS
-        workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
+			workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
 #endif
 #if USE_WASM
-        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+			codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
 #endif
 #if MEMORY_FILENAME
-        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+			memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
 #endif
 #if SYMBOLS_FILENAME
-        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+			symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
 #endif
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
-        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
-        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
-        showBanner: unityShowBanner,
-      };
+			streamingAssetsUrl: "StreamingAssets",
+			companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+			productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+			productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+			showBanner: unityShowBanner,
+		};
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
+		// By default Unity keeps WebGL canvas render target size matched with
+			// the DOM size of the canvas element (scaled by window.devicePixelRatio)
+			// Set this to false if you want to decouple this synchronization from
+			// happening inside the engine, and you would instead like to size up
+			// the canvas DOM size and WebGL render target sizes yourself.
+			// config.matchWebGLToCanvasSize = false;
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
+			if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+		// Mobile device style: fill the whole browser client area with the game canvas:
 
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        container.className = "unity-mobile";
-        canvas.className = "unity-mobile";
+		var meta = document.createElement('meta');
+		meta.name = 'viewport';
+		meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+		document.getElementsByTagName('head')[0].appendChild(meta);
+		container.className = "unity-mobile";
+		canvas.className = "unity-mobile";
 
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
+		// To lower canvas resolution on mobile devices to gain some
+		// performance, uncomment the following line:
+		// config.devicePixelRatio = 1;
 
 #if SHOW_DIAGNOSTICS
-        // position the diagnostics icon in the corner on the canvas
-        diagnostics_icon.style.position = "fixed";
-        diagnostics_icon.style.bottom = "10px";
-        diagnostics_icon.style.right = "0px";
-        canvas.after(diagnostics_icon);
+		// position the diagnostics icon in the corner on the canvas
+		diagnostics_icon.style.position = "fixed";
+		diagnostics_icon.style.bottom = "10px";
+		diagnostics_icon.style.right = "0px";
+		canvas.after(diagnostics_icon);
 #endif
 
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+		} else {
+			// Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "{{{ WIDTH }}}px";
-        canvas.style.height = "{{{ HEIGHT }}}px";
-      }
+			canvas.style.width = "{{{ WIDTH }}}px";
+			canvas.style.height = "{{{ HEIGHT }}}px";
+		}
 
 #if BACKGROUND_FILENAME
-      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+	  canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
 #endif
-      loadingBar.style.display = "block";
+	  loadingBar.style.display = "block";
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                loadingBar.style.display = "none";
-                unityGameInstance = unityInstance;
-
-
-                
+	  var script = document.createElement("script");
+	  script.src = loaderUrl;
+	  script.onload = () => {
+		createUnityInstance(canvas, config, (progress) => {
+		  progressBarFull.style.width = 100 * progress + "%";
+			  }).then((unityInstance) => {
+				loadingBar.style.display = "none";
+				unityGameInstance = unityInstance;
 
 
 #if SHOW_DIAGNOSTICS
-//                diagnostics_icon.onclick = () => {
-//                  unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMetricsInfo);
-//                };
+//				diagnostics_icon.onclick = () => {
+//				  unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMetricsInfo);
+//				};
 #endif
-                fullscreenButton.onclick = () => {
+				fullscreenButton.onclick = () => {
 					fullScreenContainer.requestFullscreen();
-                };
-              }).catch((message) => {
-                alert(message);
-              });
-            };
+				};
+			  }).catch((message) => {
+				alert(message);
+			  });
+			};
 
-      document.body.appendChild(script);
+		document.body.appendChild(script);
 
-    </script>
+	</script>
 
 
 
